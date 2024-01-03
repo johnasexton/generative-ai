@@ -27,7 +27,7 @@ from google.cloud import speech_v1p1beta1 as speech
     # Get the contents of the file from the bucket.
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
-    blob_uri = f"gs://{bucket_name}/{blob_name}"
+    blob_uri = "gs://{bucket_name}/{blob_name}"
     blob_content = blob.download_as_bytes()
 
     # Construct a Google Cloud Speech client object.

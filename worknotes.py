@@ -1,98 +1,35 @@
-import functions_framework
-import os
+# ONE SHOT PROMPT
 
-from google.cloud import storage
-from google.cloud import speech_v1p1beta1 as speech
+# imports
+import vertexai
+from vertexai.language_models import TextGenerationModel
 
 
-@functions_framework.cloud_event
-  def transcribe_gcs(cloud_event):
-    """Background Cloud Function to be triggered by Cloud Storage when a file is
-    changed.
-    Args:
-        cloud_event (dict):  The event payload.
-    """
-    # The "data" field contains a description of the event in the Cloud Storage
-    # object that triggered the function. At the end of this method you can
-    # use it to construct a Google Cloud Storage client object.
-    data = cloud_event["data"]
+def interview(
+        temperature: 0.2,
+        project_id: "initialkubetest",
+        location: "us-central1",
+) -> str:
+    """Ideation example with a Large Language Model"""
 
-    # Get the file's bucket and name from the Cloud Storage event.
-    bucket_name = data["chirp2text"]
-    blob_name = data["audio_file"]
+    vertexai.init(project=project_id, location=location)
+    # TODO developer - override these parameters as needed:
+    parameters = {
+        "temperature": 0.2,  # Temperature controls the degree of randomness in token selection.
+        "max_output_tokens": 256,  # Token limit determines the maximum amount of text output.
+        "top_p": 0.8,  # Tokens are selected from most probable to least until the sum of their probabilities equals the top_p value.
+        "top_k": 40,  # A top_k of 1 means the selected token is the most probable among all tokens.
+    }
 
-    # Construct a Google Cloud Storage client object.
-    storage_client = storage.Client()
-
-    # Get the contents of the file from the bucket.
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob_uri = "gs://{bucket_name}/{blob_name}"
-    blob_content = blob.download_as_bytes()
-
-    # Construct a Google Cloud Speech client object.
-    client = speech.SpeechClient()
-
-    # Configure request to enable multiple channels
-    config = speech.RecognitionConfig(
-        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
-        sample_rate_hertz=8000,
-        language_code="en-US",
-        audio_channel_count=2,
-        enable_separate_recognition_per_channel=True,
+    model = TextGenerationModel.from_pretrained("text-bison@001")
+    response = model.predict(
+        "Give me ten interview questions for the role of SRE.",
+        **parameters,
     )
+    print(f"Response from Model: {response.text}")
 
-    # Perform the transcription request on the remote file.
-    audio = speech.RecognitionAudio(uri=blob_uri)
-    response = client.recognize(config=config, audio=audio)
-
-    # Print the results.
-    for i, result in enumerate(response.results):
-        alternative = result.alternatives[0]
-        print("-" * 20)
-        print("First alternative of result {}".format(i))
-        print("Transcript: {}".format(alternative.transcript))
-        print("Channel Tag: {}".format(result.channel_tag))
-
-XXX
-
-from google.api_core.client_options import ClientOptions
-from google.cloud.speech_v2 import SpeechClient
-from google.cloud.speech_v2.types import cloud_speech
+    return response.text
 
 
-def transcribe_chirp(
-    project_id: initialkubetest,
-    audio_file: audio_file,
-) -> cloud_speech.RecognizeResponse:
-    """Transcribe an audio file using Chirp."""
-    # Instantiates a client
-    client = SpeechClient(
-        client_options=ClientOptions(
-            api_endpoint="us-central1-speech.googleapis.com",
-        )
-    )
-
-    # Reads a file as bytes
-    with open(audio_file, "rb") as f:
-        content = f.read()
-
-    config = cloud_speech.RecognitionConfig(
-        auto_decoding_config=cloud_speech.AutoDetectDecodingConfig(),
-        language_codes=["en-US"],
-        model="chirp",
-    )
-
-    request = cloud_speech.RecognizeRequest(
-        recognizer=f"projects/{project_id}/locations/us-central1/recognizers/_",
-        config=config,
-        content=content,
-    )
-
-    # Transcribes the audio into text
-    response = client.recognize(request=request)
-
-    for result in response.results:
-        print(f"Transcript: {result.alternatives[0].transcript}")
-
-    return response
+if __name__ == "__main__":
+    interview(0.2, 'initialkubetest', 'us-central1')

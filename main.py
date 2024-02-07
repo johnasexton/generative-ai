@@ -1,3 +1,5 @@
+# CODE CHAT
+
 # imports
 import sys
 import os
@@ -6,10 +8,14 @@ import IPython
 import pandas as pd
 from IPython.display import display, Markdown
 from vertexai.language_models import CodeChatModel
+from vertexai.language_models import TextGenerationModel
+from vertexai.language_models import ChatModel
+# from vertexai.language_models import MultimodalModel
 
-# project specific variables
-PROJECT_ID = "[initialkubetest]"  # @param {type:"string"}
+# variables
+PROJECT_ID = "initialkubetest"  # @param {type:"string"}
 LOCATION = "us-central1"  # @param {type:"string"}
+# MODEL_NAME = "gemini-pro-vision"  # @param {type:"string"}
 MODEL_NAME = "text-bison@001"  # @param {type:"string"}
 
 # initialize vertex-ai
@@ -21,22 +27,17 @@ from vertexai.preview.generative_models import (
     Part,
 )
 
-# import vertexai text generation model
-from vertexai.language_models import TextGenerationModel
-from vertexai.language_models import ChatModel
-# from vertex.ai.language_models import MultimodalModel
-
-# load the generative_models
+# load the specific generative_models
+model = TextGenerationModel("gemini-pro")
+code_chat_model = CodeChatModel.from_pretrained("codechat-bison@001")
 chatmodel = ChatModel("gemini-pro-vision")
-generation_model = TextGenerationModel("gemini-pro-vision")
+# generation_model = TextGenerationModel("gemini-pro-vision")
+generation_model = TextGenerationModel.from_pretrained("text-bison@001")
 # multimodal_model = MultimodalModel("gemini-pro-vision")
-# model = TextGenerationModel("gemini-pro")
-# generation_model = TextGenerationModel.from_pretrained("text-bison@001")
 
-# the non-working part is below this comment, everything above has been debugged
+# code below parses but produces no output, still debugging!
 
-from vertexai.language_models import CodeChatModel
-
+# assumes: from vertexai.language_models import CodeChatModel
 
 def write_a_function(temperature: float = 0.5) -> object:
     """Example of using Codey for Code Chat Model to write a function."""
@@ -47,7 +48,7 @@ def write_a_function(temperature: float = 0.5) -> object:
         "max_output_tokens": 1024,  # Token limit determines the maximum amount of text output.
     }
 
-    code_chat_model = CodeChatModel.from_pretrained("codechat-bison@001")
+    # assumes: code_chat_model = CodeChatModel.from_pretrained("codechat-bison@001")
     chat = code_chat_model.start_chat()
 
     response = chat.send_message(
@@ -56,23 +57,3 @@ def write_a_function(temperature: float = 0.5) -> object:
     print(f"Response from Model: {response.text}")
 
     return response
-
-
-if __name__ == "__main__":
-    write_a_function()
-
-# from langchain import PromptTemplate
-# from langchain.chains.question_answering import load_qa_chain
-# from langchain.document_loaders import PyPDFLoader
-# from langchain.embeddings import VertexAIEmbeddings
-# from langchain.llms import VertexAI
-# from langchain.text_splitter import CharacterTextSplitter
-# from langchain.vectorstores import Chroma
-
-prompt = "Give me ten interview questions for the role of prompt engineer."
-
-print(
-    generation_model.predict (
-        prompt=prompt, temperature=0.2, top_k=0, top_p=0.9
-    ).text
-)

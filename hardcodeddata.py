@@ -1,5 +1,21 @@
-# Import the Speech-to-Text client library
-from google.cloud import speech
+# INLINE AUDIO DATA TO TEXT
+
+# imports
+from google.api_core.client_options import ClientOptions
+# from google.api_core.client_options import SpeechClient
+# from google.api_core.client_options import cloud_speech
+# from google.api_core.client_options import speech
+# from google.api_core.client_options import speech_v1
+# from google.api_core.client_options import speech_v2
+# from google.api_core.client_options import speech_v1p1beta1
+# from google.api_core.client_options import speech_v2p1beta1
+# from google.cloud.speech_v1 import SpeechClient
+# from google.cloud.speech_v2 import SpeechClient
+# from google.cloud.speech_v1.types import cloud_speech
+# from google.cloud.speech_v2.types import cloud_speech
+# from google.cloud import speech_v1 as speech
+# from google.cloud.speech import enums
+# from google.cloud.speech import types
 
 # Instantiates a client
 client = speech.SpeechClient()

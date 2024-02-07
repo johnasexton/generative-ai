@@ -1,1 +1,75 @@
 functions-framework==3.*
+
+# Vertex AI Multimodal Requirements
+
+# Python dependencies
+# absl-py==0.15.0
+astunparse==1.6.3
+attrs==21.4.0
+cachetools==5.0.0
+certifi==2021.10.8
+chardet==4.0.0
+cloudpickle==2.0.0
+colorama==0.4.4
+# dataclasses==0.8
+decorator==5.1.1
+dill==0.3.4
+fastavro==1.4.9
+gast==0.4.0
+# google-auth==2.6.1
+google-auth-oauthlib==0.4.4
+# google-cloud-bigquery==2.35.0
+google-cloud-bigquery-storage==2.11.0
+google-cloud-bigtable==1.7.0
+# google-cloud-core==2.4.0
+# google-cloud-pubsub==3.2.0
+# google-cloud-storage==1.46.0
+# google-cloud-video-intelligence==1.18.1
+# google-cloud-videointelligence==1.18.1
+google-crc32c==1.1.2
+google-pasta==0.2.0
+google-resumable-media==2.3.1
+googleapis-common-protos==1.53.0
+grpcio==1.44.0
+h5py==3.7.0
+idna==3.3
+importlib-metadata==4.11.3
+joblib==1.1.0
+# keras==2.8.0
+# keras-preprocessing==1.1.2
+Markdown==3.3.6
+numpy==1.22.3
+oauth2client==4.1.3
+opencv-python==4.5.5.64
+packaging==21.3
+pandas==1.4.2
+Pillow==9.1.0
+protobuf==3.20.1
+pyasn1==0.4.8
+pyasn1-modules==0.2.8
+pyparsing==3.0.9
+python-dateutil==2.8.2
+pytz==2022.1
+requests==2.27.1
+requests-oauthlib==1.3.0
+rsa==4.8
+scipy==1.9.1
+six==1.16.0
+tabulate==0.8.9
+tensorboard==2.9.0
+tensorboard-plugin-wit==1.8.1
+tensorflow==2.9.0
+tensorflow-estimator==2.9.0
+tensorflow-hub==0.12.0
+termcolor==1.1.0
+threadpoolctl==3.0.0
+tqdm==4.64.0
+typing-extensions==4.2.0
+urllib3==1.26.12
+Werkzeug==2.1.2
+wrapt==1.14.1
+zipp==3.8.0
+
+# Optional dependencies
+matplotlib==3.5.2
+seaborn==0.11.2

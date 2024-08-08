@@ -4,8 +4,8 @@ from google.cloud.speech_v2.types import cloud_speech
 
 
 def transcribe_chirp(
-        project_id: initialkubetest,
-        audio_file: gs://speech2text_inbox/and-we-puttin-it-on-wax.wav,
+        project_id: "initialkubetest",
+        audio_file: "./audio_file",
 ) -> cloud_speech.RecognizeResponse:
     """Transcribe an audio file using Chirp."""
     # Instantiates a client

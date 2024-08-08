@@ -38,5 +38,3 @@ generation_model = TextGenerationModel.from_pretrained("text-bison@001")
 # code below parses but produces no output, still debugging!
 
 # assumes: from vertexai.language_models import CodeChatModel
-
-s
